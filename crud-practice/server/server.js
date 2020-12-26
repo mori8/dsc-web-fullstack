@@ -31,6 +31,7 @@ app.get('/api/articles', (req, res) => {
             res.send(rows);
         }
     )
+    console.log("hello");
 });
 
 app.get('/api/articles/:id', (req, res) => {
@@ -40,6 +41,22 @@ app.get('/api/articles/:id', (req, res) => {
             res.send(rows);
         }
     )
+    console.log("why..?");
+});
+
+app.post('/api/articles', (req, res) => {
+    let query = 'INSERT INTO board(title, name, date, body) VALUES (?, ?, ?, ?)';
+    let title = req.body.title;
+    let name = req.body.name;
+    let date = req.body.date;
+    let body = req.body.body;
+    let params = [title, name, date, body];
+    console.log(req.body);
+    connection.query(query, params,
+        (err, rows, fields) => {
+            res.send(rows);
+            console.log(err);
+        })
 });
 
 app.listen(port, ()=>{
