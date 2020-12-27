@@ -66,6 +66,22 @@ app.delete('/api/articles/:id', (req, res) => {
         })
 })
 
+app.post('/api/update', (req, res) => {
+    let query = 'UPDATE board set title = ?, name = ? , body = ? WHERE id = ?';
+    let id = req.body.id;
+    let title = req.body.title;
+    let name = req.body.name;
+    // let date = req.body.date;
+    let body = req.body.body;
+    let params = [title, name, body, id];
+    console.log(req.body);
+    connection.query(query, params,
+        (err, rows, fields) => {
+            res.send(rows);
+            console.log(err);
+        })
+});
+
 app.listen(port, ()=>{
     console.log(`express is running on ${port}`);
 })

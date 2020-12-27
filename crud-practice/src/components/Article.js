@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from "react-router-dom";
 import DeleteArticle from './DeleteArticle';
 
 class Article extends Component {
@@ -35,8 +36,6 @@ class Article extends Component {
             margin: "5px",
         }
 
-        
-
         return (
             <div className="article" key={this.state.article.id}>
             <h2 className="article-title">{this.state.article.title}</h2>
@@ -53,7 +52,16 @@ class Article extends Component {
             }) : this.state.article.body}
         </p>
             <div style={btnDivStyle}>
-                    <button type="submit" className="btn btn-secondary" style={btnStyle}>수정</button>
+                    <Link to={{
+                        pathname: `/update/${this.state.article.id}`,
+                        state: { // 오.. 새 기술이다
+                            title: this.state.article.title,
+                            name: this.state.article.name,
+                            body: this.state.article.body
+                        }
+                    }}>
+                        <button className="btn btn-secondary" style={btnStyle}>수정</button>
+                    </Link>
                     <DeleteArticle id={this.state.article.id} style="btn btn-secondary">삭제</DeleteArticle>
                 </div>
         </div>

@@ -5,23 +5,44 @@ import { Redirect, useHistory } from 'react-router-dom';
 * https://ndb796.tistory.com/222
  */
 
-class CreateArticle extends Component {
+class UpdateArticle extends Component {
     constructor(props) {
         super(props);
         this.state = {
             title: "",
             name: "",
             body: "",
+            id: "",
         }
         this.handleFormSubmit = this.handleFormSubmit.bind(this);
         this.handleValueChange = this.handleValueChange.bind(this);
-        this.addArticle = this.addArticle.bind(this);
+        this.updateArticle = this.updateArticle.bind(this);
+    }
+
+    // componentDidMount() {
+    //     this.callAPI().then(
+    //         res => {
+    //             this.setState({article: res[0]});
+    //     }).catch(
+    //         error => { console.log(error);
+    //     });
+    // }
+
+    componentDidMount() {
+        console.log(this.props.location.state.title);
+        this.setState({
+            title: this.props.location.state.title,
+            name: this.props.location.state.name,
+            body: this.props.location.state.body,
+            id: this.props.location.state.id
+        })
     }
 
     handleFormSubmit(e) {
         e.preventDefault();
-        this.addArticle();
-        window.location.href = '/board';
+        this.updateArticle();
+        alert("글이 정상적으로 수정되었습니다.");
+        window.location.href = `/board/${this.props.match.params.id}`;
     }
 
     handleValueChange(e) {
@@ -31,14 +52,15 @@ class CreateArticle extends Component {
         // console.log(this.state);
     }
 
-    addArticle = async () => {
+    updateArticle = async () => {
         // TODO: url 받으면 채워넣기
-        const url = 'http://localhost:3001/api/articles';
-        
+        const url = 'http://localhost:3001/api/update';
+
         let formData = {
             title: this.state.title,
             name: this.state.name,
             body: this.state.body,
+            id: this.props.match.params.id
         };
 
         // TODO: 이 형식으로 통신 코드 통일..?
@@ -55,7 +77,6 @@ class CreateArticle extends Component {
         }).catch(function(error) {
             return console.log(error.message);
         });
-        // 리다이렉트 어떻게 함!?
     }
  
 
@@ -84,8 +105,8 @@ class CreateArticle extends Component {
             margin: "5px",
         }
         return (
-            <form style={formStyle} onSubmit={this.handleFormSubmit} method="post">
-                <h3>글 작성하기</h3>
+            <form name="mainform" style={formStyle} onSubmit={this.handleFormSubmit} method="post">
+                <h3>글 수정하기</h3>
                 <div className="form-row" style={upperFormStyle}>
                     <div className="form-group col-md-6">
                         <label>제목</label>
@@ -102,7 +123,7 @@ class CreateArticle extends Component {
                     <textarea className="form-control" name="body" value={this.state.body} rows="20" onChange={this.handleValueChange}></textarea>
                 </div>
                 <div style={btnDivStyle}>
-                    <button type="submit" className="btn btn-primary" style={btnStyle}>작성하기!</button>
+                    <button type="submit" className="btn btn-primary" style={btnStyle}>수정하기!</button>
                     <button type="button" className="btn btn-secondary">취소</button>
                 </div>
             </form>
@@ -110,4 +131,4 @@ class CreateArticle extends Component {
     }
 }
 
-export default CreateArticle;
+export default UpdateArticle;
