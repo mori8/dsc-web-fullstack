@@ -6,6 +6,7 @@ import { Route } from "react-router-dom";
 import Article from './components/Article';
 import CreateArticle from './components/CreateArticle';
 import UpdateArticle from './components/UpdateArticle';
+import Footer from './components/Footer';
 
 class App extends React.Component {
   constructor(props) {
@@ -23,6 +24,7 @@ class App extends React.Component {
         <Route path="/board/:id" component={Article}/>
         <Route path="/create" component={CreateArticle}/>
         <Route path="/update/:id" component={UpdateArticle}/>
+        <Footer/>
       </div>
     );
   }

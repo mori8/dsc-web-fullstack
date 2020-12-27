@@ -8,9 +8,12 @@ class articleListItem extends Component {
         const { id, title, name, date } = this.props.info;
         const dateOnly = date.split('T')[0];
         const link = "/board/" + id;
+        const centerAlign = {
+            textAlign: "center"
+        }
         return (
             <tr>
-                <td>{id}</td>
+                <td style={centerAlign}>{id}</td>
                 <td><Link to={link} className="black">{title}</Link></td>
                 <td>{name}</td>
                 <td>{dateOnly}</td>

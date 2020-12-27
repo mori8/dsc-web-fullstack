@@ -28,17 +28,26 @@ class ArticleList extends Component {
             width: "85%",
             margin: "20px auto",
         }
+
+        const titleCellWidthStyle = {
+            width: "60%"
+        }
+
+        const centerAlign = {
+            textAlign: "center"
+        }
  
          const list = this.state.articles.map(
              info => (<ArticleListItem info={info} key={info.id}/>));
 
         return (
             <div>
+            <h3 style={style}>익명게시판🎄</h3>
                <table className="table" style={style}>
                    <thead>
-                        <tr>
+                        <tr style={centerAlign}>
                             <td>번호</td>
-                            <td>제목</td>
+                            <td style={titleCellWidthStyle}>제목</td>
                             <td>작성자</td>
                             <td>작성일</td>
                         </tr>
