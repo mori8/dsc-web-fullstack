@@ -6,6 +6,8 @@ class Article extends Component {
         'article': []
     }
 
+    newLineBody = '';
+
     // TODO: 중복되는 코드 줄이기
     componentDidMount() {
         this.callAPI().then(
@@ -32,6 +34,9 @@ class Article extends Component {
         const btnStyle = {
             margin: "5px",
         }
+
+        
+
         return (
             <div className="article" key={this.state.article.id}>
             <h2 className="article-title">{this.state.article.title}</h2>
@@ -40,7 +45,13 @@ class Article extends Component {
                 <div className="spacer"></div>
                 <p className="article-id">글번호: {this.state.article.id}</p>
             </div>
-            <p className="article-body">{this.state.article.body}</p>
+            <p className="article-body">{this.state.article.body ? this.state.article.body.split("\n").map((item, index) => {
+                return (<span key={index}>
+                    {item}
+                    <br/>
+                </span>)
+            }) : this.state.article.body}
+        </p>
             <div style={btnDivStyle}>
                     <button type="submit" className="btn btn-secondary" style={btnStyle}>수정</button>
                     <DeleteArticle id={this.state.article.id} style="btn btn-secondary">삭제</DeleteArticle>
