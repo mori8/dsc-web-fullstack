@@ -43,7 +43,7 @@ class CreateArticle extends Component {
             date: date.getFullYear() + "-" + (date.getMonth()+1) + "-" + date.getDate()
         };
 
-
+        // TODO: 이 형식으로 통신 코드 통일..?
         let res = await fetch(url, {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},

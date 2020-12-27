@@ -26,12 +26,11 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.get('/api/articles', (req, res) => {
     connection.query(
-        'SELECT * FROM BOARD',
+        'SELECT * FROM BOARD WHERE isDeleted = 0',
         (err, rows, fields) => {
             res.send(rows);
         }
     )
-    console.log("hello");
 });
 
 app.get('/api/articles/:id', (req, res) => {
@@ -41,16 +40,15 @@ app.get('/api/articles/:id', (req, res) => {
             res.send(rows);
         }
     )
-    console.log("why..?");
 });
 
 app.post('/api/articles', (req, res) => {
-    let query = 'INSERT INTO board(title, name, date, body) VALUES (?, ?, ?, ?)';
+    let query = 'INSERT INTO board(title, name, date, body, isDeleted) VALUES (?, ?, now(), ?, 0)';
     let title = req.body.title;
     let name = req.body.name;
-    let date = req.body.date;
+    // let date = req.body.date;
     let body = req.body.body;
-    let params = [title, name, date, body];
+    let params = [title, name, body];
     console.log(req.body);
     connection.query(query, params,
         (err, rows, fields) => {
@@ -58,6 +56,15 @@ app.post('/api/articles', (req, res) => {
             console.log(err);
         })
 });
+
+app.delete('/api/articles/:id', (req, res) => {
+    let query = 'UPDATE board SET isDeleted = 1 WHERE id = ?';
+    let params = [req.params.id];
+    connection.query(query, params,
+        (err, rows, fields) => {
+            res.send(rows);
+        })
+})
 
 app.listen(port, ()=>{
     console.log(`express is running on ${port}`);
